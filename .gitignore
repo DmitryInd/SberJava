@@ -23,7 +23,6 @@
 hs_err_pid*
 
 #Techical files
-**/.gradle/**
-**/build/**
-**/.idea/**
-**/gradle/**
+.gradle
+.idea
+build
