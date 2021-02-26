@@ -30,6 +30,30 @@ public class Car {
         return Objects.hash(carId, brand, modelName, maxVelocity, power, ownerId);
     }
 
+    public int getCarId() {
+        return carId;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public int getMaxVelocity() {
+        return maxVelocity;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
     private final int carId;
     private final String brand;
     private final String modelName;
