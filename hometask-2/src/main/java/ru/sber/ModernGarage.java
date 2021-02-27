@@ -32,7 +32,8 @@ public class ModernGarage implements Garage{
      */
     @Override
     public Collection<Car> allCarsOfBrand(String brand) {
-        return brandCars.get(brand);
+        HashSet<Car> cars = brandCars.get(brand);
+        return cars == null ? new HashSet<>() : cars;
     }
 
     /**
@@ -54,7 +55,8 @@ public class ModernGarage implements Garage{
      */
     @Override
     public Collection<Car> allCarsOfOwner(Owner owner) {
-        return ownerCars.get(owner.getId());
+        HashSet<Car> cars = ownerCars.get(owner.getId());
+        return cars == null ? new HashSet<>() : cars;
     }
 
     /**
@@ -63,15 +65,14 @@ public class ModernGarage implements Garage{
      */
     @Override
     public int meanOwnersAgeOfCarBrand(String brand) {
+        if (!brandCars.containsKey(brand)) return 0;
         int meanValue = 0;
         HashSet<Owner> consideredOwners = new HashSet<>();
-        for(var entry: brandCars.values()) {
-            for (var car : entry) {
-                Owner owner = ownersTable.get(car.getOwnerId());
-                if (!consideredOwners.contains(owner)) {
-                    consideredOwners.add(owner);
-                    meanValue += owner.getAge();
-                }
+        for(Car car: brandCars.get(brand)) {
+            Owner owner = ownersTable.get(car.getOwnerId());
+            if (!consideredOwners.contains(owner)) {
+                consideredOwners.add(owner);
+                meanValue += owner.getAge();
             }
         }
 
