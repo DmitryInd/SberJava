@@ -98,6 +98,9 @@ public class ModernGarage implements Garage{
      */
     @Override
     public Car removeCar(int carId) {
+        if (!carsTable.containsKey(carId)) {
+            throw new AssertionError("There isn't car with this id in garage");
+        }
         Car car = carsTable.remove(carId);
         powerCarsList.remove(car);
 
@@ -119,13 +122,17 @@ public class ModernGarage implements Garage{
      */
     @Override
     public void addNewCar(Car car, Owner owner) {
+        if (carsTable.containsKey(car.getCarId())) {
+            throw new AssertionError("Car with this id had been already added to garage.");
+        }
+
         carsTable.put(car.getCarId(), car);
         ownersTable.put(car.getOwnerId(), owner);
 
         powerCarsList.add(car);
         velocityCarsList.add(car);
 
-        ownerCars.compute(owner.getId(), (k,v) -> addCarToMap(car, v));
+        ownerCars.compute(car.getOwnerId(), (k,v) -> addCarToMap(car, v));
         brandCars.compute(car.getBrand(), (k,v) -> addCarToMap(car, v));
     }
 
@@ -146,11 +153,11 @@ public class ModernGarage implements Garage{
         return v;
     }
 
-    private HashMap<Integer, Car> carsTable;
-    private HashMap<Integer, Owner> ownersTable;
+    private HashMap<Integer, Car> carsTable = new HashMap<>();
+    private HashMap<Integer, Owner> ownersTable = new HashMap<>();
 
-    private HashMap<Integer, HashSet<Car>> ownerCars;
-    private HashMap<String, HashSet<Car>> brandCars;
+    private HashMap<Integer, HashSet<Car>> ownerCars = new HashMap<>();
+    private HashMap<String, HashSet<Car>> brandCars = new HashMap<>();
 
     private TreeSet<Car> powerCarsList = new TreeSet<>(
             (obj1, obj2) -> obj2.getPower() - obj1.getPower());

@@ -48,7 +48,7 @@ class OwnerTest {
 
     private void testEqualsDifferentOwners(String name, String lastName, int age, int id) {
         Owner obj1 = new Owner(name, lastName, age, id);
-        Owner obj2 = new Owner(name + "_Junior", lastName + "_Senior", age-20, id);
+        Owner obj2 = new Owner(name + "_Junior", lastName + "_Senior", age-20, id + 101);
 
         assertNotEquals(obj1, obj2);
     }
