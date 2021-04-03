@@ -22,11 +22,11 @@ public class CabCompany {
         ));
         dispatcher.addTaxi(freeCars);
 
-
         for (var taxi: freeCars) {
             launchDaemonThread(new Thread(taxi));
         }
         launchDaemonThread(new Thread(dispatcher));
+
         try {
             Thread.sleep(60000);
         } catch (InterruptedException ignore) {}

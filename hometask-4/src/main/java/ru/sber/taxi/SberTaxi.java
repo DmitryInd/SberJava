@@ -29,6 +29,7 @@ public class SberTaxi implements Taxi {
                 Thread.sleep((int) (Math.random()* 2500L) + 2500);
             } catch (InterruptedException ignore) {}
 
+            out.log(id + ": выполнил заказ");
             myOrder = null;
             dispatcher.notifyAvailable(this);
         }
