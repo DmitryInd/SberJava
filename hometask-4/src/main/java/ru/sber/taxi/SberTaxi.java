@@ -15,22 +15,25 @@ public class SberTaxi implements Taxi {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         while (true) {
-            while (myOrder == null) {
+            synchronized(this) {
+                while (myOrder == null) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException ignore) {
+                    }
+                }
+
+                out.log(id + ": выполняю заказ");
                 try {
-                    this.wait();
+                    Thread.sleep((int) (Math.random() * 2500L) + 2500);
                 } catch (InterruptedException ignore) {
                 }
+
+                out.log(id + ": выполнил заказ");
+                myOrder = null;
             }
-
-            out.log(id + ": выполняю заказ");
-            try {
-                Thread.sleep((int) (Math.random()* 2500L) + 2500);
-            } catch (InterruptedException ignore) {}
-
-            out.log(id + ": выполнил заказ");
-            myOrder = null;
             dispatcher.notifyAvailable(this);
         }
     }
@@ -39,6 +42,6 @@ public class SberTaxi implements Taxi {
     public synchronized void placeOrder(Order order) {
         out.log(id + ": взял заказ");
         myOrder = order;
-        this.notify();
+        this.notifyAll();
     }
 }

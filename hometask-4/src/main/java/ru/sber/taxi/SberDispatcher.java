@@ -26,13 +26,14 @@ public class SberDispatcher implements Dispatcher {
         synchronized (freeCars) {
             out.log("Зафиксировал свободную машину");
             freeCars.add(taxi);
-            freeCars.notify();
+            freeCars.notifyAll();
         }
     }
 
     @Override
     public void run() {
         while(true) {
+            Taxi chosenCar;
             synchronized (freeCars) {
                 while(freeCars.isEmpty()) {
                     try {
@@ -41,8 +42,9 @@ public class SberDispatcher implements Dispatcher {
                 }
 
                 out.log("Передал заказ");
-                freeCars.remove().placeOrder(new Order());
+                chosenCar = freeCars.remove();
             }
+            chosenCar.placeOrder(new Order());
         }
     }
 }
