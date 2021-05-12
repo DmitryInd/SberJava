@@ -3,6 +3,16 @@ package ru.sber;
 import java.util.*;
 
 public class ModernGarage implements Garage{
+    private final Map<Integer, Car> carsTable = new HashMap<>();
+    private final Map<Integer, Owner> ownersTable = new HashMap<>();
+
+    private final Map<Integer, HashSet<Car>> ownerCars = new HashMap<>();
+    private final Map<String, HashSet<Car>> brandCars = new HashMap<>();
+
+    private final TreeSet<Car> powerCarsList = new TreeSet<>(
+            (obj1, obj2) -> obj2.getPower() - obj1.getPower());
+    private final Set<Car> velocityCarsList = new TreeSet<>(
+            (obj1, obj2) -> obj2.getMaxVelocity() - obj1.getMaxVelocity());
 
     @Override
     public Collection<Owner> allCarsUniqueOwners() {
@@ -100,7 +110,7 @@ public class ModernGarage implements Garage{
     @Override
     public Car removeCar(int carId) {
         if (!carsTable.containsKey(carId)) {
-            throw new AssertionError("There isn't car with this id in garage");
+            throw new IllegalArgumentException("There isn't car with this id in garage");
         }
         Car car = carsTable.remove(carId);
         powerCarsList.remove(car);
@@ -133,16 +143,8 @@ public class ModernGarage implements Garage{
         powerCarsList.add(car);
         velocityCarsList.add(car);
 
-        ownerCars.compute(car.getOwnerId(), (k,v) -> addCarToMap(car, v));
-        brandCars.compute(car.getBrand(), (k,v) -> addCarToMap(car, v));
-    }
-
-    private HashSet<Car> addCarToMap(Car car, HashSet<Car> v) {
-        if (v == null) {
-            v = new HashSet<>();
-        }
-        v.add(car);
-        return v;
+        ownerCars.computeIfAbsent(car.getOwnerId(), k -> new HashSet<>()).add(car);
+        brandCars.computeIfAbsent(car.getBrand(), k -> new HashSet<>()).add(car);
     }
 
     private HashSet<Car> removeCarFromMap(Car car, HashSet<Car> v) {
@@ -153,15 +155,4 @@ public class ModernGarage implements Garage{
         }
         return v;
     }
-
-    private HashMap<Integer, Car> carsTable = new HashMap<>();
-    private HashMap<Integer, Owner> ownersTable = new HashMap<>();
-
-    private HashMap<Integer, HashSet<Car>> ownerCars = new HashMap<>();
-    private HashMap<String, HashSet<Car>> brandCars = new HashMap<>();
-
-    private TreeSet<Car> powerCarsList = new TreeSet<>(
-            (obj1, obj2) -> obj2.getPower() - obj1.getPower());
-    private TreeSet<Car> velocityCarsList = new TreeSet<>(
-            (obj1, obj2) -> obj2.getMaxVelocity() - obj1.getMaxVelocity());
 }

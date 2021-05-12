@@ -3,6 +3,13 @@ package ru.sber;
 import java.util.Objects;
 
 public class Car {
+    private final int carId;
+    private final String brand;
+    private final String modelName;
+    private final int maxVelocity;
+    private final int power;
+    private final int ownerId;
+
     public Car(int carId, String brand, String modelName, int maxVelocity, int power, int ownerId) {
         this.carId = carId;
         this.brand = brand;
@@ -17,17 +24,12 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return carId == car.carId &&
-                maxVelocity == car.maxVelocity &&
-                power == car.power &&
-                ownerId == car.ownerId &&
-                Objects.equals(brand, car.brand) &&
-                Objects.equals(modelName, car.modelName);
+        return carId == car.carId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carId, brand, modelName, maxVelocity, power, ownerId);
+        return Objects.hash(carId);
     }
 
     public int getCarId() {
@@ -53,11 +55,4 @@ public class Car {
     public int getOwnerId() {
         return ownerId;
     }
-
-    private final int carId;
-    private final String brand;
-    private final String modelName;
-    private final int maxVelocity;
-    private final int power;
-    private final int ownerId;
 }

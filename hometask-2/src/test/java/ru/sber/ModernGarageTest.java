@@ -22,7 +22,7 @@ class ModernGarageTest {
     void removeCar() {
         ModernGarage obj = new ModernGarage();
         obj.addNewCar(car1, owner1);
-        assertThrows(AssertionError.class, () -> obj.removeCar(car2.getCarId()));
+        assertThrows(IllegalArgumentException.class, () -> obj.removeCar(car2.getCarId()));
         assertEquals(car1, obj.removeCar(car1.getCarId()));
     }
 
