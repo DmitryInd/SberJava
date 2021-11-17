@@ -13,11 +13,11 @@ public class OptimalClientReaderTest {
         IndividualClient myClient = (IndividualClient) ClientReader.optimalCreateClient(
                 "src/test/resources/IndividualObject.json");
 
-        assertEquals("Alexander Petrov Sergeevich", myClient.fullName);
-        assertEquals(new BigInteger("38934893048"), myClient.inn);
-        assertEquals("Russia", myClient.country);
-        assertTrue(myClient.isSanctioned);
-        assertEquals(new BigInteger("2939420211"), myClient.passportInfo);
+        assertEquals("Alexander Petrov Sergeevich", myClient.getFullName());
+        assertEquals(new BigInteger("38934893048"), myClient.getInn());
+        assertEquals("Russia", myClient.getCountry());
+        assertTrue(myClient.isSanctioned());
+        assertEquals(new BigInteger("2939420211"), myClient.getPassportInfo());
     }
 
     @Test
@@ -25,9 +25,9 @@ public class OptimalClientReaderTest {
         LegalEntityClient myClient = (LegalEntityClient) ClientReader.optimalCreateClient(
                     "src/test/resources/LegalEntityObject.json");
 
-        assertEquals("ООО Матрешка", myClient.name);
-        assertEquals(new BigInteger("13242352"), myClient.inn);
-        assertTrue(myClient.isSanctioned);
+        assertEquals("ООО Матрешка", myClient.getName());
+        assertEquals(new BigInteger("13242352"), myClient.getInn());
+        assertTrue(myClient.isSanctioned());
     }
 
     @Test
@@ -35,9 +35,9 @@ public class OptimalClientReaderTest {
         HoldingClient myClient = (HoldingClient) ClientReader.optimalCreateClient(
                 "src/test/resources/HoldingObject.json");
 
-        assertEquals("ООО Mail Group", myClient.name);
-        assertEquals("Contractual", myClient.type);
-        assertFalse(myClient.isSanctioned);
+        assertEquals("ООО Mail Group", myClient.getName());
+        assertEquals("Contractual", myClient.getType());
+        assertFalse(myClient.isSanctioned());
     }
 
     @Test(expected = IllegalArgumentException.class)

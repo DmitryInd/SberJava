@@ -26,5 +26,5 @@ public enum ClientType {
         }
     };
 
-    abstract public Client createClient(JsonObject jsonObject);
+    public abstract Client createClient(JsonObject jsonObject);
 }
