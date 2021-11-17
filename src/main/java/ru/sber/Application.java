@@ -9,7 +9,7 @@ public class Application {
 
     public static void main(String... args) throws IOException {
         IndividualClient myClient = (IndividualClient) ClientReader.optimalCreateClient(
-                "src/test/resources/IndividualObject.json");
+                "IndividualClientCard.json");
 
         logger.info("Object with card data: " + myClient.toString());
     }
