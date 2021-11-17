@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ClientReader {
+    private ClientReader() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Client optimalCreateClient(String jsonPath) throws IOException {
         JsonObject client = getJsonObject(jsonPath);
         String clientType = client.get("clientType").getAsString();
