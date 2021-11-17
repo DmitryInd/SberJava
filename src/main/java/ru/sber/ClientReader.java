@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ClientReader {
-    private ClientReader() {
+     ClientReader() {
         throw new IllegalStateException("Utility class");
     }
 
